@@ -521,7 +521,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
       await sbPost("clients", { id: clientId, name: form.name.trim(), description: form.description.trim(), account_type: form.account_type, created_at: new Date().toLocaleString("es-AR") });
       for (let i = 0; i < docRows.length; i++) {
         const d = docRows[i];
-        await sbPost("documents", { id: d.isSection ? generateId() : d.id, client_id: clientId, label: d.label, icon: d.icon, required: d.required, note: d.note, files: "[]", sort_order: i });
+        await sbPost("documents", { id: generateId(), client_id: clientId, label: d.label, icon: d.icon, required: d.required, note: d.note, files: "[]", sort_order: i });
       }
       await load();
       setForm({ name: "", description: "", account_type: "banesco_personal" });
@@ -537,7 +537,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
       await sbDelete("documents", `client_id=eq.${editing}`);
       for (let i = 0; i < docRows.length; i++) {
         const d = docRows[i];
-        await sbPost("documents", { id: d.isSection ? generateId() : d.id, client_id: editing, label: d.label, icon: d.icon, required: d.required, note: d.note, files: JSON.stringify(d.files || []), sort_order: i });
+        await sbPost("documents", { id: generateId(), client_id: editing, label: d.label, icon: d.icon, required: d.required, note: d.note, files: JSON.stringify(d.files || []), sort_order: i });
       }
       await load();
       setEditing(null);
